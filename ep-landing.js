@@ -176,7 +176,7 @@ var EPP = (function() {
   // ContentSpeed: header#header
   var cmsBar = document.querySelector('header#header');
   if (cmsBar && cmsBar.offsetHeight > 0) {
-   return cmsBar.getBoundingClientRect().bottom;
+   return Math.max(0, cmsBar.getBoundingClientRect().bottom);
   }
   // Fallback: orice fixed/sticky
   var offset = 0;
@@ -202,7 +202,9 @@ var EPP = (function() {
   var top = getCmsOffset();
   if (top !== lastTop) {
    epHeader.style.top = top + 'px';
-   if (epHero) epHero.style.marginTop = (top + epHeader.offsetHeight) + 'px';
+   var cmsBar2 = document.querySelector('header#header');
+   var cmsFixed = cmsBar2 && window.getComputedStyle(cmsBar2).position === 'fixed';
+   if (epHero) epHero.style.marginTop = (cmsFixed ? top + epHeader.offsetHeight : epHeader.offsetHeight) + 'px';
    lastTop = top;
   }
  }
