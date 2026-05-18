@@ -169,54 +169,23 @@ var EPP = (function() {
 (function() {
  var epHeader = document.querySelector('.ep-header');
  var epHero = document.querySelector('.ep-hero');
- var epWrap = document.querySelector('.ep-wrap');
  if (!epHeader) return;
-
- function getCmsOffset() {
-  // ContentSpeed: header#header
+ function update() {
   var cmsBar = document.querySelector('header#header');
-  if (cmsBar && cmsBar.offsetHeight > 0) {
-   return Math.max(0, cmsBar.getBoundingClientRect().bottom);
-  }
-  // Fallback: orice fixed/sticky
-  var offset = 0;
-  var allEls = document.querySelectorAll('*');
-  for (var i = 0; i < allEls.length; i++) {
-   var el = allEls[i];
-   if (!el || el === epHeader || (epWrap && epWrap.contains(el))) continue;
-   var pos = window.getComputedStyle(el).position;
-   if (pos === 'fixed' || pos === 'sticky') {
-    var r = el.getBoundingClientRect();
-    if (r.top >= -2 && r.bottom > offset && r.bottom < window.innerHeight * 0.4) offset = r.bottom;
-   }
-  }
-  if (offset === 0 && epWrap && window.scrollY < 10) {
-   var wt = epWrap.getBoundingClientRect().top;
-   if (wt > 5) offset = wt;
-  }
-  return offset;
- }
-
- var lastTop = -1;
- function updateTop() {
-  var top = getCmsOffset();
-  if (top !== lastTop) {
-   epHeader.style.top = top + 'px';
-   var cmsBar2 = document.querySelector('header#header');
-   var cmsFixed = cmsBar2 && window.getComputedStyle(cmsBar2).position === 'fixed';
-   if (epHero) epHero.style.marginTop = (cmsFixed ? top + epHeader.offsetHeight : epHeader.offsetHeight) + 'px';
-   lastTop = top;
+  var cmsVisible = cmsBar && cmsBar.getBoundingClientRect().bottom > 0;
+  if (cmsVisible) {
+   epHeader.style.display = 'none';
+   if (epHero) epHero.style.marginTop = '0';
+  } else {
+   epHeader.style.display = '';
+   epHeader.style.top = '0px';
+   if (epHero) epHero.style.marginTop = epHeader.offsetHeight + 'px';
   }
  }
-
- // Detectare imediată + retry pentru bara injectată dinamic
- updateTop();
- [100, 300, 600, 1000, 2000].forEach(function(ms) { setTimeout(updateTop, ms); });
-
- // MutationObserver: actualizează când CMS-ul adaugă/modifică elemente în DOM
- var observer = new MutationObserver(function() { updateTop(); });
+ update();
+ [100, 300, 600, 1000].forEach(function(ms) { setTimeout(update, ms); });
+ var observer = new MutationObserver(update);
  observer.observe(document.documentElement, { childList: true, subtree: true });
-
- window.addEventListener('scroll', updateTop, { passive: true });
- window.addEventListener('resize', updateTop);
+ window.addEventListener('scroll', update, { passive: true });
+ window.addEventListener('resize', update);
 })();
