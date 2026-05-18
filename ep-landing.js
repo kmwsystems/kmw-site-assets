@@ -173,27 +173,27 @@ var EPP = (function() {
  if (!epHeader) return;
 
  function getCmsOffset() {
+  // ContentSpeed: header#header
+  var cmsBar = document.querySelector('header#header');
+  if (cmsBar && cmsBar.offsetHeight > 0) {
+   return cmsBar.getBoundingClientRect().bottom;
+  }
+  // Fallback: orice fixed/sticky
   var offset = 0;
-
-  // 1. Elemente fixed/sticky din tot DOM-ul (nu doar 2 nivele)
   var allEls = document.querySelectorAll('*');
   for (var i = 0; i < allEls.length; i++) {
    var el = allEls[i];
-   if (el === epHeader || epHeader.contains(el) || (epWrap && epWrap.contains(el))) continue;
+   if (!el || el === epHeader || (epWrap && epWrap.contains(el))) continue;
    var pos = window.getComputedStyle(el).position;
    if (pos === 'fixed' || pos === 'sticky') {
     var r = el.getBoundingClientRect();
     if (r.top >= -2 && r.bottom > offset && r.bottom < window.innerHeight * 0.4) offset = r.bottom;
    }
   }
-
-  // 2. Dacă nu s-a găsit nimic fixed, bara CMS e statică —
-  //    măsurăm unde începe .ep-wrap față de viewport la scroll 0
-  if (offset === 0 && epWrap && window.scrollY < 5) {
-   var wrapTop = epWrap.getBoundingClientRect().top;
-   if (wrapTop > 5) offset = wrapTop;
+  if (offset === 0 && epWrap && window.scrollY < 10) {
+   var wt = epWrap.getBoundingClientRect().top;
+   if (wt > 5) offset = wt;
   }
-
   return offset;
  }
 
@@ -207,10 +207,14 @@ var EPP = (function() {
   }
  }
 
+ // Detectare imediată + retry pentru bara injectată dinamic
+ updateTop();
+ [100, 300, 600, 1000, 2000].forEach(function(ms) { setTimeout(updateTop, ms); });
+
+ // MutationObserver: actualizează când CMS-ul adaugă/modifică elemente în DOM
+ var observer = new MutationObserver(function() { updateTop(); });
+ observer.observe(document.documentElement, { childList: true, subtree: true });
+
  window.addEventListener('scroll', updateTop, { passive: true });
  window.addEventListener('resize', updateTop);
- updateTop();
- setTimeout(updateTop, 100);
- setTimeout(updateTop, 300);
- setTimeout(updateTop, 700);
 })();
