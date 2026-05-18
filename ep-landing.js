@@ -1,4 +1,4 @@
-﻿// Capture cross-origin errors from external scripts (YouTube API, Mailchimp)
+// Capture cross-origin errors from external scripts (YouTube API, Mailchimp)
 // so they don't pollute the console.
 window.addEventListener('error', function(e) {
  if (!e.filename || e.message === 'Script error.') { e.preventDefault(); return false; }
@@ -169,30 +169,44 @@ var EPP = (function() {
 (function() {
  var epHeader = document.querySelector('.ep-header');
  var epHero = document.querySelector('.ep-hero');
+ var epWrap = document.querySelector('.ep-wrap');
  if (!epHeader) return;
- function getCmsFixedBottom() {
- var max = 0;
- var els = document.querySelectorAll('body > *, body > * > *');
- for (var i = 0; i < els.length; i++) {
- var el = els[i];
- if (el === epHeader || epHeader.contains(el)) continue;
- var pos = window.getComputedStyle(el).position;
- if (pos === 'fixed' || pos === 'sticky') {
- var r = el.getBoundingClientRect();
- if (r.top >= -2 && r.bottom > max && r.bottom < window.innerHeight * 0.4) max = r.bottom;
+
+ function getCmsOffset() {
+  var offset = 0;
+
+  // 1. Elemente fixed/sticky din tot DOM-ul (nu doar 2 nivele)
+  var allEls = document.querySelectorAll('*');
+  for (var i = 0; i < allEls.length; i++) {
+   var el = allEls[i];
+   if (el === epHeader || epHeader.contains(el) || (epWrap && epWrap.contains(el))) continue;
+   var pos = window.getComputedStyle(el).position;
+   if (pos === 'fixed' || pos === 'sticky') {
+    var r = el.getBoundingClientRect();
+    if (r.top >= -2 && r.bottom > offset && r.bottom < window.innerHeight * 0.4) offset = r.bottom;
+   }
+  }
+
+  // 2. Dacă nu s-a găsit nimic fixed, bara CMS e statică —
+  //    măsurăm unde începe .ep-wrap față de viewport la scroll 0
+  if (offset === 0 && epWrap && window.scrollY < 5) {
+   var wrapTop = epWrap.getBoundingClientRect().top;
+   if (wrapTop > 5) offset = wrapTop;
+  }
+
+  return offset;
  }
- }
- return max;
- }
+
  var lastTop = -1;
  function updateTop() {
- var top = getCmsFixedBottom();
- if (top !== lastTop) {
- epHeader.style.top = top + 'px';
- if (epHero) epHero.style.marginTop = (top + epHeader.offsetHeight) + 'px';
- lastTop = top;
+  var top = getCmsOffset();
+  if (top !== lastTop) {
+   epHeader.style.top = top + 'px';
+   if (epHero) epHero.style.marginTop = (top + epHeader.offsetHeight) + 'px';
+   lastTop = top;
+  }
  }
- }
+
  window.addEventListener('scroll', updateTop, { passive: true });
  window.addEventListener('resize', updateTop);
  updateTop();
