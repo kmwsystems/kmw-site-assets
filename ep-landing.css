@@ -1,4 +1,4 @@
-﻿.ep-wrap *, .ep-wrap *::before, .ep-wrap *::after { box-sizing: border-box; }
+.ep-wrap *, .ep-wrap *::before, .ep-wrap *::after { box-sizing: border-box; }
 .ep-wrap { font-family: 'Inter', sans-serif; color: #1F2937; background: #fff; -webkit-font-smoothing: antialiased; line-height: 1.5; }
 .ep-wrap img { max-width: 100%; display: block; }
 .ep-wrap ul { list-style: none; padding: 0; margin: 0; }
