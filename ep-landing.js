@@ -175,7 +175,7 @@ var EPP = (function() {
   var cmsVisible = cmsBar && cmsBar.getBoundingClientRect().bottom > 0;
   if (cmsVisible) {
    epHeader.style.display = 'none';
-   if (epHero) epHero.style.marginTop = '0';
+   if (epHero) epHero.style.marginTop = '-20px';
   } else {
    epHeader.style.display = '';
    epHeader.style.top = '0px';
