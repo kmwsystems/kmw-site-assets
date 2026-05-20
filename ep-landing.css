@@ -19,7 +19,7 @@
 @media (min-width: 768px) { .ep-header-phone { display: inline-flex; align-items: center; gap: 0.5rem; } }
 .ep-header-phone svg { width: 16px; height: 16px; stroke: #E31B2B; }
 .ep-btn-cta { background: #E31B2B; color: #fff; font-weight: 600; padding: 0.625rem 1.125rem; border-radius: 8px; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 12px -2px rgba(227,27,43,0.35); font-size: 0.875rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.4rem; }
-.ep-btn-cta:hover { background: #B91626; }
+.ep-btn-cta:hover { background: #B91626; color: #fff; }
 .ep-btn-cta:active { transform: translateY(1px); }
 @media (min-width: 768px) { .ep-btn-cta { padding: 0.7rem 1.25rem; font-size: 0.9375rem; } }
 .ep-hero { width: 100%; background: #2D2D2D; position: relative; margin-top: 62px; }
@@ -40,7 +40,7 @@
 .ep-hero-ctas { display: flex; flex-direction: column; gap: 0.625rem; pointer-events: auto; align-items: flex-start; }
 @media (min-width: 640px) { .ep-hero-ctas { flex-direction: row; align-items: center; } }
 .ep-btn-cta-lg { background: #E31B2B; color: #fff; font-weight: 600; padding: 0.875rem 1.5rem; border-radius: 10px; transition: background 0.2s; box-shadow: 0 10px 30px -8px rgba(227,27,43,0.5); font-size: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; }
-.ep-btn-cta-lg:hover { background: #B91626; }
+.ep-btn-cta-lg:hover { background: #B91626; color: #fff; }
 .ep-btn-ghost { background: rgba(0,0,0,0.45); color: #fff; border: 1px solid rgba(255,255,255,0.4); padding: 0.875rem 1.25rem; border-radius: 10px; font-size: 1rem; font-weight: 600; transition: background 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
 .ep-btn-ghost:hover { background: rgba(0,0,0,0.6); }
 .ep-unmute-btn { position: absolute !important; top: 50% !important; left: 50% !important; bottom: auto !important; right: auto !important; transform: translate(-50%, -50%) !important; z-index: 20; display: flex; flex-direction: column; align-items: center; gap: 0.375rem; background: rgba(0,0,0,0.6); color: #fff; font-size: 0.8125rem; font-weight: 600; padding: 0.75rem 1rem; border-radius: 999px; backdrop-filter: blur(4px); transition: background 0.2s; border: 1px solid rgba(255,255,255,0.4); cursor: pointer; animation: ep-unmute-pulse 2.4s ease-in-out infinite; }
