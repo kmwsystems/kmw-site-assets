@@ -179,11 +179,12 @@ var EPP = (function() {
   var target = document.querySelector(hash);
   if (!target) return;
   e.preventDefault();
+  e.stopPropagation();
   var epHeader = document.querySelector('.ep-header');
   var offset = epHeader && epHeader.style.display !== 'none' ? epHeader.offsetHeight : 0;
   var top = target.getBoundingClientRect().top + window.scrollY - offset - 16;
   window.scrollTo({ top: top, behavior: 'smooth' });
- });
+ }, { capture: true });
 })();
 (function() {
  var epHeader = document.querySelector('.ep-header');
