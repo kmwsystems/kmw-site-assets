@@ -167,7 +167,7 @@
 .ep-product-cta i { position: absolute; left: 0; top: 0; bottom: 0; width: 40px; display: flex; align-items: center; justify-content: center; background: #E31B2B; color: #fff; font-size: 1rem; border-bottom-right-radius: 15px; font-style: normal; }
 .ep-software { background: #F3F4F6; padding: 5rem 0; }
 .ep-software-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
-@media (min-width: 1024px) { .ep-software-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+@media (min-width: 1024px) { .ep-software-grid { grid-template-columns: 1fr 1fr; gap: 0; } }
 .ep-sw-list { display: flex; flex-direction: column; gap: 0.875rem; margin-bottom: 1.5rem; }
 .ep-sw-item { display: flex; align-items: flex-start; }
 .ep-sw-item svg { width: 22px; height: 22px; stroke: #0F8A5F; margin-right: 0.875rem; flex-shrink: 0; margin-top: 1px; }
