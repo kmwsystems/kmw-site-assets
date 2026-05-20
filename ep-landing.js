@@ -168,6 +168,23 @@ var EPP = (function() {
  window.fnames = ['EMAIL','FNAME','LNAME','PHONE','MMERGE5','MMERGE6','MMERGE7'];
  window.ftypes = ['email','text','text','phone','radio','text','text'];
 })();
+// Smooth scroll pentru toate link-urile cu ancora (#)
+(function() {
+ document.addEventListener('click', function(e) {
+  var a = e.target.closest('a[href]');
+  if (!a) return;
+  var href = a.getAttribute('href');
+  var hash = href.indexOf('#') !== -1 ? href.slice(href.indexOf('#')) : null;
+  if (!hash || hash === '#') return;
+  var target = document.querySelector(hash);
+  if (!target) return;
+  e.preventDefault();
+  var epHeader = document.querySelector('.ep-header');
+  var offset = epHeader && epHeader.style.display !== 'none' ? epHeader.offsetHeight : 0;
+  var top = target.getBoundingClientRect().top + window.scrollY - offset - 16;
+  window.scrollTo({ top: top, behavior: 'smooth' });
+ });
+})();
 (function() {
  var epHeader = document.querySelector('.ep-header');
  var epHero = document.querySelector('.ep-hero');
