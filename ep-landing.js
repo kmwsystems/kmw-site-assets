@@ -168,30 +168,20 @@ var EPP = (function() {
  window.fnames = ['EMAIL','FNAME','LNAME','PHONE','MMERGE5','MMERGE6','MMERGE7'];
  window.ftypes = ['email','text','text','phone','radio','text','text'];
 })();
-// Smooth scroll — înlocuiește href cu javascript:void(0) și adaugă scroll direct
-(function() {
- function initSmoothScroll() {
-  document.querySelectorAll('.ep-wrap a[href*="#"]').forEach(function(a) {
-   var href = a.getAttribute('href');
-   var idx = href.indexOf('#');
-   if (idx === -1) return;
-   var hash = href.slice(idx);
-   if (hash === '#') return;
-   var target = document.querySelector(hash);
-   if (!target) return;
-   a.setAttribute('href', 'javascript:void(0)');
-   a.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var epHeader = document.querySelector('.ep-header');
-    var offset = epHeader && epHeader.style.display !== 'none' ? epHeader.offsetHeight : 0;
-    var top = target.getBoundingClientRect().top + window.scrollY - offset - 16;
-    window.scrollTo({ top: top, behavior: 'smooth' });
-   });
-  });
- }
- if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initSmoothScroll); } else { setTimeout(initSmoothScroll, 0); }
-})();
+// Smooth scroll via data-scroll attribute
+document.addEventListener('click', function(e) {
+ var a = e.target.closest('[data-scroll]');
+ if (!a) return;
+ var id = a.getAttribute('data-scroll');
+ var target = document.getElementById(id);
+ if (!target) return;
+ e.preventDefault();
+ e.stopPropagation();
+ var epHeader = document.querySelector('.ep-header');
+ var offset = epHeader && epHeader.style.display !== 'none' ? epHeader.offsetHeight : 0;
+ var top = target.getBoundingClientRect().top + window.scrollY - offset - 16;
+ window.scrollTo({ top: top, behavior: 'smooth' });
+}, true);
 (function() {
  var epHeader = document.querySelector('.ep-header');
  var epHero = document.querySelector('.ep-hero');
