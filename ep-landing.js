@@ -10,6 +10,8 @@ var EPP = (function() {
  window.onYouTubeIframeAPIReady = function() {
  if (typeof _prevYTReady === 'function') _prevYTReady();
  ytPlayer = new YT.Player('yt-player', {
+ width: '100%',
+ height: '100%',
  videoId: 'nUA5OgpJGgU',
  playerVars: { autoplay: 1, mute: 1, loop: 1, playlist: 'nUA5OgpJGgU', rel: 0, showinfo: 0, controls: 0, modestbranding: 1, playsinline: 1 },
  events: { onReady: function(e) { e.target.playVideo(); }, onStateChange: onYtStateChange }
