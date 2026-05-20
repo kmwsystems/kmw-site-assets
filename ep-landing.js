@@ -27,17 +27,15 @@ var EPP = (function() {
  function unmuteVideo() {
  if (!ytPlayer) return;
  var btn = document.getElementById('unmute-btn');
+ if (btn) btn.classList.add('ep-clicked');
  if (isMuted) {
  ytPlayer.unMute(); ytPlayer.setVolume(80); isMuted = false;
- // YouTube sometimes pauses on volume change — force resume.
  setTimeout(function() { try { ytPlayer.playVideo(); } catch (e) {} }, 50);
- if (btn) btn.classList.add('ep-unmuted');
  document.getElementById('unmute-icon').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M12 6v12m-3.536-9.536a5 5 0 000 7.072M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707A1 1 0 0112 5v14a1 1 0 01-1.707.707L5.586 15z"/>';
  document.getElementById('unmute-label').textContent = 'Oprește sunetul';
  } else {
  ytPlayer.mute(); isMuted = true;
  setTimeout(function() { try { ytPlayer.playVideo(); } catch (e) {} }, 50);
- if (btn) btn.classList.add('ep-unmuted');
  document.getElementById('unmute-icon').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707A1 1 0 0112 5v14a1 1 0 01-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>';
  document.getElementById('unmute-label').textContent = 'Activează sunetul';
  }
