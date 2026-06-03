@@ -97,8 +97,15 @@ var EPP = (function() {
  var required = form.querySelectorAll('[required]');
  var valid = true;
  required.forEach(function(el) {
- if (!el.value.trim()) { el.style.borderColor = '#E31B2B'; el.style.boxShadow = '0 0 0 3px rgba(227,27,43,0.15)'; valid = false; }
- else { el.style.borderColor = ''; el.style.boxShadow = ''; }
+ var msg = el.parentNode.querySelector('.ep-field-error');
+ if (!el.value.trim()) {
+  el.style.borderColor = '#E31B2B'; el.style.boxShadow = '0 0 0 3px rgba(227,27,43,0.15)'; valid = false;
+  if (!msg) { msg = document.createElement('span'); msg.className = 'ep-field-error'; msg.style.cssText = 'display:block;color:#E31B2B;font-size:0.78rem;margin-top:4px;'; el.parentNode.appendChild(msg); }
+  msg.textContent = 'Câmp obligatoriu';
+ } else {
+  el.style.borderColor = ''; el.style.boxShadow = '';
+  if (msg) msg.remove();
+ }
  });
  if (!valid) { e.preventDefault(); return; }
  setTimeout(function() {
