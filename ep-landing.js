@@ -1,4 +1,4 @@
-// Capture cross-origin errors from external scripts (YouTube API, Mailchimp)
+﻿// Capture cross-origin errors from external scripts (YouTube API, Mailchimp)
 // so they don't pollute the console.
 window.addEventListener('error', function(e) {
  if (!e.filename || e.message === 'Script error.') { e.preventDefault(); return false; }
