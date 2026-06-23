@@ -84,13 +84,23 @@
     transition:transform .18s ease, box-shadow .18s ease, background .18s, border-color .18s;
     border:1px solid transparent;letter-spacing:-0.005em;
   }
-  .btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(211,47,47,0.28)}
+  /* Culorile de text sunt forțate pe toate stările (link/visited/hover/focus)
+     ca să nu fie suprascrise de un eventual `a:hover{color}` din CSS-ul comun al site-ului */
+  .btn-primary,
+  .btn-primary:link,.btn-primary:visited,.btn-primary:hover,.btn-primary:focus,.btn-primary:active{color:#fff !important}
+  .btn-primary{background:var(--primary);box-shadow:0 6px 16px rgba(211,47,47,0.28)}
   .btn-primary:hover{background:var(--primary-2);transform:translateY(-1px);box-shadow:0 10px 22px rgba(211,47,47,0.34)}
-  .btn-ghost{color:var(--text);border-color:transparent}
+  .btn-ghost,
+  .btn-ghost:link,.btn-ghost:visited,.btn-ghost:hover,.btn-ghost:focus,.btn-ghost:active{color:var(--text) !important}
+  .btn-ghost{border-color:transparent}
   .btn-ghost:hover{background:var(--bg-alt)}
-  .btn-outline{border-color:var(--text);color:var(--text);background:#fff}
-  .btn-outline:hover{background:var(--text);color:#fff;transform:translateY(-1px)}
-  .btn-outline-light{border-color:rgba(255,255,255,0.25);color:var(--text-light);background:transparent}
+  .btn-outline,
+  .btn-outline:link,.btn-outline:visited,.btn-outline:focus,.btn-outline:active{color:var(--text) !important}
+  .btn-outline{border-color:var(--text);background:#fff}
+  .btn-outline:hover{background:var(--text);color:#fff !important;transform:translateY(-1px)}
+  .btn-outline-light,
+  .btn-outline-light:link,.btn-outline-light:visited,.btn-outline-light:hover,.btn-outline-light:focus,.btn-outline-light:active{color:var(--text-light) !important}
+  .btn-outline-light{border-color:rgba(255,255,255,0.25);background:transparent}
   .btn-outline-light:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.5)}
   .btn-lg{padding:15px 24px;font-size:15px;border-radius:12px}
 
