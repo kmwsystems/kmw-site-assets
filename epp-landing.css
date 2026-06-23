@@ -162,7 +162,7 @@
   .hero-meta svg{color:var(--primary);flex-shrink:0}
 
   /* ------------ HERO SOCIAL PROOF ------------ */
-  .hero-proof{margin-top:54px}
+  .hero-proof{margin-top:54px;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
   .hero-proof .eyebrow{display:block;text-align:center;margin-bottom:9px}
   .hero-proof h3{
     text-align:center;font-family:var(--display);font-weight:700;
@@ -410,9 +410,40 @@
   .laptop-base{height:6px;background:linear-gradient(180deg,#2A2D38,#1B1E27);border-radius:0 0 12px 12px;margin:0 -14px}
 
   @media (max-width:900px){
-    .soon-grid{grid-template-columns:1fr;gap:48px}
-    .soon-vis{height:auto;padding:20px 0 60px}
-    .laptop{position:relative;right:auto;bottom:auto;margin:-60px auto 0;display:block}
+    .soon{padding:80px 0}
+    .soon-grid{grid-template-columns:minmax(0,1fr);gap:40px}
+    .soon-grid>*{min-width:0}
+    /* `balance` poate lăsa un rând care depășește ecranul îngust; `pretty` respectă lățimea */
+    .soon h2{text-wrap:pretty}
+    /* păstrăm compoziția suprapusă ca pe web (telefon în față, laptop în spate-dreapta), doar mai mică */
+    .soon-vis{height:400px;min-width:0}
+    .soon-vis .phone{width:180px;height:360px;transform:rotate(-6deg)}
+    /* scalăm și conținutul din ecranul telefonului ca să încapă fără să se taie */
+    .phone-screen{padding:30px 11px 11px;gap:7px}
+    .ph-row{font-size:8px}
+    .ph-greet{font-size:14px}
+    .ph-greet small{font-size:9px}
+    .ph-card{padding:9px;gap:4px;border-radius:10px}
+    .ph-clock{font-size:19px}
+    .ph-status{font-size:8px}
+    .ph-btn{padding:6px;font-size:9px}
+    .ph-stat{font-size:9px}
+    .ph-stat b{font-size:12px}
+    .ph-mini .m{padding:6px}
+    .ph-mini .m b{font-size:11px}
+    .ph-mini .m span{font-size:8px}
+    .laptop{
+      position:absolute;z-index:1;
+      width:300px;right:20px;bottom:60px;margin:0;max-width:none;
+      transform:rotate(4deg);
+    }
+    /* scalăm și conținutul laptopului ca să rămână proporțional la lățimea redusă */
+    .laptop-inner{height:165px;padding:9px;gap:5px}
+    .lp-title{font-size:9px}
+    .lp-grid{gap:4px}
+    .lp-cell{padding:5px;border-radius:4px}
+    .lp-cell b{font-size:10px}
+    .lp-cell span{font-size:6px}
     .soon-list{grid-template-columns:1fr}
   }
 
@@ -478,7 +509,9 @@
   .farrow svg{opacity:0.6}
   @media (max-width:1000px){
     .flow{grid-template-columns:1fr;gap:14px}
-    .farrow{transform:rotate(90deg);padding:6px 0}
+    .farrow,
+    .farrow.reveal,
+    .farrow.reveal.in{transform:rotate(90deg);padding:6px 0}
   }
 
   /* features */
@@ -675,6 +708,10 @@
   /* small screens */
   @media (max-width:768px){
     .nav-links{display:none}
+    .nav-cta .btn-ghost{display:none}
+    .hero-mockup{display:none}
+    .badge{white-space:nowrap;font-size:9.5px;padding:6px 11px;gap:6px;letter-spacing:0}
+    .badge .dot{flex-shrink:0}
     .wrap{padding:0 22px}
     section.s{padding:80px 0}
     .hero{padding:120px 0 40px}
