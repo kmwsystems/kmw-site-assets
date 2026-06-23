@@ -701,6 +701,25 @@
   }
   @media (max-width:900px){.foot-grid{grid-template-columns:1fr 1fr;gap:28px}}
 
+  /* kit pontaj mobil (light spotlight) */
+  #kit-mobil{background:var(--bg)}
+  #kit-mobil .km-grid{
+    display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center;margin-top:48px;
+  }
+  #kit-mobil .km-vis{position:relative}
+  #kit-mobil .km-vis img{
+    width:100%;height:auto;display:block;border-radius:20px;
+    box-shadow:0 36px 70px -28px rgba(15,23,42,.45);
+  }
+  #kit-mobil .km-list{list-style:none;padding:0;margin:0 0 28px;display:grid;gap:13px}
+  #kit-mobil .km-list li{display:flex;gap:11px;align-items:flex-start;font-size:15px;line-height:1.5}
+  #kit-mobil .km-list li svg{flex:none;margin-top:3px;color:#10B981}
+  #kit-mobil .km-cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  @media (max-width:860px){
+    #kit-mobil .km-grid{grid-template-columns:1fr;gap:34px;margin-top:36px}
+    #kit-mobil .km-vis{order:-1}
+  }
+
   /* reveal */
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s ease, transform .8s ease}
   .reveal.in{opacity:1;transform:none}
