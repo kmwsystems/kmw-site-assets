@@ -22,7 +22,7 @@
 
   // navbar scroll
   const nav = document.getElementById('nav');
-  const SOLID_AT = 150;  // 0-150 transparent, mai jos = background alb solid
+  const SOLID_AT = 165;  // 0-150 transparent, mai jos = background alb solid
   const onScroll = () => {
     const past = window.scrollY > SOLID_AT;
     nav.classList.toggle('scrolled', past);
@@ -50,4 +50,4 @@
 
   // pornește pagina de la un anumit nivel de scroll
   history.scrollRestoration = 'manual';
-  window.scrollTo(0, 143);
+  window.scrollTo(0, 158);
