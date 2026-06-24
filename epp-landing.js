@@ -22,9 +22,11 @@
 
   // navbar scroll
   const nav = document.getElementById('nav');
+  const SOLID_AT = 150;  // 0-150 transparent, mai jos = background alb solid
   const onScroll = () => {
-    if (window.scrollY > 40) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
+    const past = window.scrollY > SOLID_AT;
+    nav.classList.toggle('scrolled', past);
+    nav.classList.toggle('solid', past);
   };
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
