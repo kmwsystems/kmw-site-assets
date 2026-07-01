@@ -1,26 +1,5 @@
 /*!
  * kmw-chat.js — Widget chatbot flotant pentru site-ul KMW
- * -------------------------------------------------------------------
- * • Fără dependențe, fără build. Un singur <script> îl pornește.
- * • Izolat în Shadow DOM => NU intră în conflict cu kmw.css (și invers).
- * • Reia paleta/fontul temei KMW (roșu #ed1c24, închis #222, Open Sans).
- * • Backend „frontend-only": motor simplu de FAQ pe reguli (KMW_CHAT.rules).
- *   Când vrei backend real, înlocuiește doar funcția `getBotReply` — vezi
- *   secțiunea „PUNCT DE INTEGRARE BACKEND" mai jos.
- *
- * Instalare: adaugă înainte de </body> (o singură dată, global):
- *   <script src="/kmw-chat.js" defer></script>
- *
- * Config opțional (înainte de a încărca scriptul):
- *   <script>
- *     window.KMW_CHAT_CONFIG = {
- *       title: 'Asistent KMW',
- *       subtitle: 'Îți răspundem în câteva secunde',
- *       greeting: 'Bună! Cu ce te pot ajuta?',
- *       position: 'right',        // 'right' | 'left'
- *       accent: '#ed1c24'
- *     };
- *   </script>
  */
 (function () {
   'use strict';
@@ -31,7 +10,7 @@
   // ------------------------------------------------------------------
   // 0) GARDĂ DE PREVIZUALIZARE
   //    Widgetul pornește DOAR dacă:
-  //      • URL-ul conține ?preview_chat=1  (activează + memorează pentru sesiune)
+  //      • URL-ul conține ?preview_chat=1
   //      • sau a fost activat deja în sesiunea curentă
   //    Ca să oprești: adaugă ?preview_chat=0 în URL.
   //    Șterge acest bloc când vrei să-l faci vizibil pentru toți.
@@ -66,7 +45,8 @@
     accentDark: '#c81720',   // hover
     dark: '#222222',         // header / bule bot
     whatsapp: '',            // ex: '40712345678' -> arată buton WhatsApp la fallback
-    contactUrl: '/contact-kmw'
+    contactUrl: '/contact-kmw',
+    avatarUrl: 'https://cdn.contentspeed.ro/kmw.websales.ro/cs-content/cs-photos/wysiwyg/9122ddc0d898b5245a9e7240077db658-1782894527.png' // logo robot; e afișat alb prin filtru CSS
   }, window.KMW_CHAT_CONFIG || {});
 
   // ------------------------------------------------------------------
@@ -168,6 +148,9 @@
     '}',
     '.kmw-fab:hover{ background: var(--accent-dark); transform: translateY(-2px); }',
     '.kmw-fab svg{ width: 28px; height: 28px; fill: #fff; }',
+    // Logo robot (PNG) redat alb, ca să se vadă pe fundalul roșu
+    '.kmw-fab .kmw-logo{ width: 40px; height: 40px; object-fit: contain; filter: brightness(0) invert(1); }',
+    '.kmw-ava .kmw-logo{ width: 30px; height: 30px; object-fit: contain; filter: brightness(0) invert(1); }',
     '.kmw-fab .kmw-badge{',
     '  position: absolute; top: -10px; ' + side + ': -4px; background: #09bf40; color:#fff;',
     '  width: 18px; height: 18px; border-radius: 50%; font-size: 11px; font-weight: 700;',
@@ -227,8 +210,8 @@
   // ------------------------------------------------------------------
   // 4) ICONIȚE (SVG inline)
   // ------------------------------------------------------------------
-  // Robot cu antenă — dă imediat impresia de chatbot
-  var ICON_BOT = '<svg viewBox="0 0 24 24"><path d="M12 1.5a1.25 1.25 0 0 1 1.25 1.25c0 .53-.33.98-.79 1.16l.04.09H16a3 3 0 0 1 3 3v.34a2.5 2.5 0 0 1 1 1.99v2.34a2.5 2.5 0 0 1-1 2V17a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-3.01a2.5 2.5 0 0 1-1-2V9.65a2.5 2.5 0 0 1 1-1.99V7.32a3 3 0 0 1 3-3h3.5l.04-.09a1.25 1.25 0 0 1-.79-1.16A1.25 1.25 0 0 1 12 1.5zM9 10.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm6 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9 16h6v1.5H9V16z"/></svg>';
+  // Logo robot (PNG din assets). Filtrul CSS .kmw-logo îl face alb pe fundal roșu.
+  var ICON_BOT = '<img class="kmw-logo" src="' + CFG.avatarUrl + '" alt="" draggable="false">';
   var ICON_CHAT = ICON_BOT;
   var ICON_SEND = '<svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>';
 
