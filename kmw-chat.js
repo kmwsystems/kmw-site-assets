@@ -46,7 +46,7 @@
     dark: '#222222',         // header / bule bot
     whatsapp: '',            // ex: '40712345678' -> arată buton WhatsApp la fallback
     contactUrl: '/contact-kmw',
-    avatarUrl: 'https://cdn.contentspeed.ro/kmw.websales.ro/cs-content/cs-photos/wysiwyg/9122ddc0d898b5245a9e7240077db658-1782894527.png' // logo robot; e afișat alb prin filtru CSS
+    avatarUrl: 'https://cdn.contentspeed.ro/kmw.websales.ro/cs-content/cs-photos/wysiwyg/7ab655ebe11d68cd14e5da057e5b24f7-1782894830.png' // logo robot; e afișat alb prin filtru CSS
   }, window.KMW_CHAT_CONFIG || {});
 
   // ------------------------------------------------------------------
