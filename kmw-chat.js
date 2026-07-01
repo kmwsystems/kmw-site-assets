@@ -1,5 +1,26 @@
 /*!
  * kmw-chat.js — Widget chatbot flotant pentru site-ul KMW
+ * -------------------------------------------------------------------
+ * • Fără dependențe, fără build. Un singur <script> îl pornește.
+ * • Izolat în Shadow DOM => NU intră în conflict cu kmw.css (și invers).
+ * • Reia paleta/fontul temei KMW (roșu #ed1c24, închis #222, Open Sans).
+ * • Backend „frontend-only": motor simplu de FAQ pe reguli (KMW_CHAT.rules).
+ *   Când vrei backend real, înlocuiește doar funcția `getBotReply` — vezi
+ *   secțiunea „PUNCT DE INTEGRARE BACKEND" mai jos.
+ *
+ * Instalare: adaugă înainte de </body> (o singură dată, global):
+ *   <script src="/kmw-chat.js" defer></script>
+ *
+ * Config opțional (înainte de a încărca scriptul):
+ *   <script>
+ *     window.KMW_CHAT_CONFIG = {
+ *       title: 'Asistent KMW',
+ *       subtitle: 'Îți răspundem în câteva secunde',
+ *       greeting: 'Bună! Cu ce te pot ajuta?',
+ *       position: 'right',        // 'right' | 'left'
+ *       accent: '#ed1c24'
+ *     };
+ *   </script>
  */
 (function () {
   'use strict';
@@ -9,7 +30,12 @@
 
   // ------------------------------------------------------------------
   // 0) GARDĂ DE PREVIZUALIZARE
-
+  //    Widgetul pornește DOAR dacă:
+  //      • URL-ul conține ?preview_chat=1  (activează + memorează pentru sesiune)
+  //      • sau a fost activat deja în sesiunea curentă
+  //    Ca să oprești: adaugă ?preview_chat=0 în URL.
+  //    Șterge acest bloc când vrei să-l faci vizibil pentru toți.
+  // ------------------------------------------------------------------
   try {
     var __qs = new URLSearchParams(window.location.search);
     if (__qs.has('preview_chat')) {
@@ -45,6 +71,8 @@
 
   // ------------------------------------------------------------------
   // 2) MOTOR DE RĂSPUNS (reguli simple / FAQ) — editabil ușor
+  //    Fiecare regulă: cuvinte-cheie -> răspuns. Prima potrivire câștigă.
+  //    Diacriticele sunt normalizate, deci „livrare" = „livrări".
   // ------------------------------------------------------------------
   var RULES = [
     {
@@ -69,7 +97,7 @@
     },
     {
       keys: ['contact', 'telefon', 'email', 'program', 'vorbesc cu cineva', 'operator', 'om'],
-      reply: '__CONTACT__' // marcaj special: afișează butoanele de contact
+      reply: '__CONTACT__'
     },
     {
       keys: ['salut', 'buna', 'hey', 'noroc', 'ziua'],
@@ -199,8 +227,9 @@
   // ------------------------------------------------------------------
   // 4) ICONIȚE (SVG inline)
   // ------------------------------------------------------------------
-  var ICON_CHAT = '<svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM7 9h10v2H7V9zm0 4h7v2H7v-2z"/></svg>';
-  var ICON_BOT = '<svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2v1h3a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3h3V4a2 2 0 0 1 2-2zM8.5 11a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm7 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>';
+  // Robot cu antenă — dă imediat impresia de chatbot
+  var ICON_BOT = '<svg viewBox="0 0 24 24"><path d="M12 1.5a1.25 1.25 0 0 1 1.25 1.25c0 .53-.33.98-.79 1.16l.04.09H16a3 3 0 0 1 3 3v.34a2.5 2.5 0 0 1 1 1.99v2.34a2.5 2.5 0 0 1-1 2V17a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-3.01a2.5 2.5 0 0 1-1-2V9.65a2.5 2.5 0 0 1 1-1.99V7.32a3 3 0 0 1 3-3h3.5l.04-.09a1.25 1.25 0 0 1-.79-1.16A1.25 1.25 0 0 1 12 1.5zM9 10.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm6 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9 16h6v1.5H9V16z"/></svg>';
+  var ICON_CHAT = ICON_BOT;
   var ICON_SEND = '<svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>';
 
   // ------------------------------------------------------------------
