@@ -264,7 +264,7 @@
     if (CFG.whatsapp) {
       html += '<a class="kmw-wa" target="_blank" rel="noopener" href="https://wa.me/' + CFG.whatsapp + '">WhatsApp</a>';
     }
-    html += '<a class="kmw-ct" href="' + CFG.contactUrl + '">Formular contact</a>';
+    html += '<a class="kmw-ct" href="https://www.kmw.ro/contact-kmw' + CFG.contactUrl + '">Mergi la pagina de contactt</a>';
     html += '</div>';
     return html;
   }
