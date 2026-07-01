@@ -152,7 +152,7 @@
     '.kmw-fab .kmw-logo{ width: 40px; height: 40px; object-fit: contain; filter: brightness(0) invert(1); }',
     '.kmw-ava .kmw-logo{ width: 30px; height: 30px; object-fit: contain; filter: brightness(0) invert(1); }',
     '.kmw-fab .kmw-badge{',
-    '  position: absolute; top: 2; ' + side + ': 2; background: #09bf40; color:#fff;',
+    '  position: absolute; top: -8px; ' + side + ': -2px; background: #09bf40; color:#fff;',
     '  width: 18px; height: 18px; border-radius: 50%; font-size: 11px; font-weight: 700;',
     '  display: flex; align-items: center; justify-content: center;',
     '}',
