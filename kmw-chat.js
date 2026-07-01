@@ -37,7 +37,7 @@
     },
     {
       keys: ['retur', 'returnare', 'inapoi', 'garantie', 'garantia'],
-      reply: 'Ai drept de retur în 14 zile calendaristice de la primire. Produsele cu defect beneficiază de garanție conform legii — scrie-ne datele comenzii și te ajutăm cu procesul.'
+      reply: 'Ai drept de retur în 14 zile calendaristice de la primire. Produsele cu defect beneficiază de garanție conform legii, dar scrie-ne datele comenzii și te ajutăm cu procesul.'
     },
     {
       keys: ['plata', 'plati', 'card', 'ramburs', 'factura', 'facturare'],
