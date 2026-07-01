@@ -137,7 +137,7 @@
     '.kmw-root{',
     '  --accent:' + CFG.accent + '; --accent-dark:' + CFG.accentDark + ';',
     '  --dark:' + CFG.dark + '; --bg:#ffffff; --bot-bg:#f4f4f4; --line:#e8e8e8;',
-    '  position: fixed; ' + side + ': 20px; bottom: 20px; z-index: 2147483000;',
+    '  position: fixed; ' + side + ': 20px; bottom: 90px; z-index: 2147483000;',
     '}',
     // Butonul flotant (bula)
     '.kmw-fab{',
