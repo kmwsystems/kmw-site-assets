@@ -1,12 +1,30 @@
 /*!
  * kmw-chat.js — Widget chatbot flotant pentru site-ul KMW
-
  */
 (function () {
   'use strict';
 
   // Nu porni de două ori (dacă scriptul e inclus accidental de mai multe ori)
   if (window.__kmwChatLoaded) return;
+
+  // ------------------------------------------------------------------
+  // 0) GARDĂ DE PREVIZUALIZARE
+
+  try {
+    var __qs = new URLSearchParams(window.location.search);
+    if (__qs.has('preview_chat')) {
+      if (__qs.get('preview_chat') === '0') {
+        sessionStorage.removeItem('kmw_preview_chat');
+      } else {
+        sessionStorage.setItem('kmw_preview_chat', '1');
+      }
+    }
+    if (sessionStorage.getItem('kmw_preview_chat') !== '1') return;
+  } catch (e) {
+    // Dacă URLSearchParams/sessionStorage nu sunt disponibile, nu porni.
+    return;
+  }
+
   window.__kmwChatLoaded = true;
 
   // ------------------------------------------------------------------
@@ -27,8 +45,6 @@
 
   // ------------------------------------------------------------------
   // 2) MOTOR DE RĂSPUNS (reguli simple / FAQ) — editabil ușor
-  //    Fiecare regulă: cuvinte-cheie -> răspuns. Prima potrivire câștigă.
-  //    Diacriticele sunt normalizate, deci „livrare" = „livrări".
   // ------------------------------------------------------------------
   var RULES = [
     {
@@ -57,7 +73,7 @@
     },
     {
       keys: ['salut', 'buna', 'hey', 'noroc', 'ziua'],
-      reply: 'Salut! 😊 Spune-mi cu ce te pot ajuta — livrare, retur, plată, stoc sau contact.'
+      reply: 'Salut! 😊 Spune-mi cu ce te pot ajuta - livrare, retur, plată, stoc sau contact.'
     },
     {
       keys: ['multumesc', 'mersi', 'multam'],
@@ -65,7 +81,7 @@
     }
   ];
 
-  var FALLBACK = 'Momentan nu am un răspuns automat pentru asta. Te pot pune în legătură cu un coleg — vezi opțiunile de contact mai jos.';
+  var FALLBACK = 'Momentan nu am un răspuns automat pentru asta. Te pot pune în legătură cu un coleg - vezi opțiunile de contact mai jos.';
 
   function normalize(s) {
     return (s || '')
@@ -125,7 +141,7 @@
     '.kmw-fab:hover{ background: var(--accent-dark); transform: translateY(-2px); }',
     '.kmw-fab svg{ width: 28px; height: 28px; fill: #fff; }',
     '.kmw-fab .kmw-badge{',
-    '  position: absolute; top: -4px; ' + side + ': -4px; background: #09bf40; color:#fff;',
+    '  position: absolute; top: -10px; ' + side + ': -4px; background: #09bf40; color:#fff;',
     '  width: 18px; height: 18px; border-radius: 50%; font-size: 11px; font-weight: 700;',
     '  display: flex; align-items: center; justify-content: center;',
     '}',
@@ -202,18 +218,18 @@
   root.className = 'kmw-root';
   root.innerHTML =
     '<div class="kmw-panel" role="dialog" aria-label="' + CFG.title + '">' +
-      '<div class="kmw-head">' +
-        '<div class="kmw-ava">' + ICON_BOT + '</div>' +
-        '<div><div class="kmw-t">' + CFG.title + '</div><div class="kmw-s">' + CFG.subtitle + '</div></div>' +
-        '<button class="kmw-close" aria-label="Închide">&times;</button>' +
-      '</div>' +
-      '<div class="kmw-body"></div>' +
-      '<div class="kmw-quick"></div>' +
-      '<div class="kmw-foot">' +
-        '<textarea rows="1" placeholder="' + CFG.placeholder + '" aria-label="Mesaj"></textarea>' +
-        '<button class="kmw-send" aria-label="Trimite">' + ICON_SEND + '</button>' +
-      '</div>' +
-      '<div class="kmw-cred">Asistent virtual KMW</div>' +
+    '<div class="kmw-head">' +
+    '<div class="kmw-ava">' + ICON_BOT + '</div>' +
+    '<div><div class="kmw-t">' + CFG.title + '</div><div class="kmw-s">' + CFG.subtitle + '</div></div>' +
+    '<button class="kmw-close" aria-label="Închide">&times;</button>' +
+    '</div>' +
+    '<div class="kmw-body"></div>' +
+    '<div class="kmw-quick"></div>' +
+    '<div class="kmw-foot">' +
+    '<textarea rows="1" placeholder="' + CFG.placeholder + '" aria-label="Mesaj"></textarea>' +
+    '<button class="kmw-send" aria-label="Trimite">' + ICON_SEND + '</button>' +
+    '</div>' +
+    '<div class="kmw-cred">Asistent virtual KMW</div>' +
     '</div>' +
     '<button class="kmw-fab" aria-label="Deschide chat">' + ICON_CHAT + '<span class="kmw-badge">1</span></button>';
   shadow.appendChild(root);
@@ -264,7 +280,7 @@
     if (CFG.whatsapp) {
       html += '<a class="kmw-wa" target="_blank" rel="noopener" href="https://wa.me/' + CFG.whatsapp + '">WhatsApp</a>';
     }
-    html += '<a class="kmw-ct" href="' + CFG.contactUrl + '">Mergi la pagina de contactt</a>';
+    html += '<a class="kmw-ct" href="' + CFG.contactUrl + '">Formular contact</a>';
     html += '</div>';
     return html;
   }
