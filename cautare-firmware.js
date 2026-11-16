@@ -899,6 +899,11 @@ $('cgi-text').addEventListener('input', () => {
 $('search-result').hidden = true;
 updateWhatsApp();
 });
+$('cgi-text').addEventListener('keydown', event => {
+if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return;
+event.preventDefault();
+searchWhenReady();
+});
 for (const id of ['table-filter', 'category-filter']) $(id).addEventListener('input', () => { page = 0; renderTable(); });
 $('database-select').addEventListener('change', () => { page = 0; $('category-filter').value = ''; message(''); renderTable(); renderDraftNotice(); });
 $('draft-use').addEventListener('click', () => {
