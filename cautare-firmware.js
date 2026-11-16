@@ -132,8 +132,8 @@ window.dispatchEvent(new CustomEvent('kmw-device-opened', {detail: {tab: output,
 if (!navigateResultTab(output, commandUrl(data.protocol, data, COMMANDS[operation]))) {
 closeResultTab(output);
 showMessage('Fila de rezultat a fost închisă sau blocată. Apasă din nou butonul dorit.');
-} else if (data.protocol === 'https') {
-showMessage('Dacă apare avertizarea de certificat, după ce accepți continuarea conexiunii poate fi necesar să introduci din nou utilizatorul și parola.');
+} else {
+showMessage('Dacă pagina se deschide prin HTTPS și apare avertizarea de certificat, după ce accepți continuarea conexiunii poate fi necesar să introduci din nou utilizatorul și parola.');
 }
 }
 readButton.addEventListener('click', () => openDevice());
@@ -277,11 +277,7 @@ setTimeout(() => show('Rezultatul CGI a fost trimis în căutare. Poți închide
 }
 }
 window.addEventListener('message', receive);
-<<<<<<< HEAD
 timer = setTimeout(expire, target ? 4000 : 1600);
-=======
-timer = setTimeout(expire, 4000);
->>>>>>> 04d103f7dac25fcfaf0507fbd63446fe23bf7a68
 show('Trimit rezultatul CGI…');
 if (target) ping();
 }
@@ -365,7 +361,6 @@ bookmark.addEventListener('click', event => {
 event.preventDefault();
 show('Trage „Preia CGI” în bara de marcaje, apoi folosește marcajul în pagina cu rezultatul CGI.');
 });
-<<<<<<< HEAD
 let channel = null;
 try { channel = new win.BroadcastChannel('kmw-cgi-relay'); } catch {}
 const newId = () => Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
@@ -401,19 +396,12 @@ channel.addEventListener('message', onAck);
 channel.postMessage({type: 'kmw-cgi-relay', id, from: instanceId, text});
 win.setTimeout(() => finish(false), 1000);
 }
-=======
->>>>>>> 04d103f7dac25fcfaf0507fbd63446fe23bf7a68
 function receiveFragment() {
 const raw = win.location.hash.slice(1);
 if (!raw.startsWith('kmw-cgi=') || raw.length > 200000) return;
 const text = readCgiText(new URLSearchParams(raw).get('kmw-cgi'));
-<<<<<<< HEAD
 try { win.history.replaceState(null, '', win.location.href.split('#')[0]); } catch {}
 if (text) handOver(text);
-=======
-if (text) onResult(text);
-try { win.history.replaceState(null, '', win.location.href.split('#')[0]); } catch {}
->>>>>>> 04d103f7dac25fcfaf0507fbd63446fe23bf7a68
 }
 win.addEventListener('hashchange', receiveFragment);
 receiveFragment();
