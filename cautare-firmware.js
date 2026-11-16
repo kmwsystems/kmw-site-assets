@@ -277,7 +277,11 @@ setTimeout(() => show('Rezultatul CGI a fost trimis în căutare. Poți închide
 }
 }
 window.addEventListener('message', receive);
+<<<<<<< HEAD
+timer = setTimeout(expire, target ? 4000 : 1600);
+=======
 timer = setTimeout(expire, 4000);
+>>>>>>> 04d103f7dac25fcfaf0507fbd63446fe23bf7a68
 show('Trimit rezultatul CGI…');
 if (target) ping();
 }
@@ -361,12 +365,55 @@ bookmark.addEventListener('click', event => {
 event.preventDefault();
 show('Trage „Preia CGI” în bara de marcaje, apoi folosește marcajul în pagina cu rezultatul CGI.');
 });
+<<<<<<< HEAD
+let channel = null;
+try { channel = new win.BroadcastChannel('kmw-cgi-relay'); } catch {}
+const newId = () => Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
+const instanceId = newId();
+if (channel) channel.addEventListener('message', ({data}) => {
+if (!data || data.type !== 'kmw-cgi-relay' || data.from === instanceId || typeof data.text !== 'string') return;
+const text = readCgiText(data.text);
+if (!text) return;
+channel.postMessage({type: 'kmw-cgi-relayed', id: data.id});
+onResult(text);
+});
+function handOver(text) {
+if (!channel) { onResult(text); return; }
+const id = newId();
+let done = false;
+function finish(handed) {
+if (done) return;
+done = true;
+channel.removeEventListener('message', onAck);
+if (!handed) { onResult(text); return; }
+show('Rezultatul CGI a fost trimis în pagina de căutare deja deschisă.');
+try { win.close(); } catch {}
+win.setTimeout(() => {
+if (win.closed) return;
+onResult(text);
+show('Rezultatul CGI a fost trimis și în pagina de căutare deja deschisă. Poți închide această filă.');
+}, 400);
+}
+function onAck({data}) {
+if (data && data.type === 'kmw-cgi-relayed' && data.id === id) finish(true);
+}
+channel.addEventListener('message', onAck);
+channel.postMessage({type: 'kmw-cgi-relay', id, from: instanceId, text});
+win.setTimeout(() => finish(false), 1000);
+}
+=======
+>>>>>>> 04d103f7dac25fcfaf0507fbd63446fe23bf7a68
 function receiveFragment() {
 const raw = win.location.hash.slice(1);
 if (!raw.startsWith('kmw-cgi=') || raw.length > 200000) return;
 const text = readCgiText(new URLSearchParams(raw).get('kmw-cgi'));
+<<<<<<< HEAD
+try { win.history.replaceState(null, '', win.location.href.split('#')[0]); } catch {}
+if (text) handOver(text);
+=======
 if (text) onResult(text);
 try { win.history.replaceState(null, '', win.location.href.split('#')[0]); } catch {}
+>>>>>>> 04d103f7dac25fcfaf0507fbd63446fe23bf7a68
 }
 win.addEventListener('hashchange', receiveFragment);
 receiveFragment();
