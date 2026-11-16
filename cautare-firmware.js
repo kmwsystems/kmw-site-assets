@@ -743,7 +743,7 @@ const button = element('button', suggestion.model, 'fwc-sugg');
 button.type = 'button';
 button.setAttribute('aria-label', 'Vezi fișierele pentru ' + suggestion.model);
 button.setAttribute('aria-pressed', String(suggestion.model === model));
-button.addEventListener('click', () => search(suggestion.model));
+button.addEventListener('click', () => { search(suggestion.model); revealResult(); });
 $('suggestions').append(button);
 }
 for (const record of files) {
@@ -883,12 +883,18 @@ $('found-model').hidden = true;
 $('search-status').className = 'fwc-status is-error';
 $('search-status').textContent = 'Lista de modele nu a putut fi încărcată. Încearcă din nou sau trimite-ne modelul pe WhatsApp.';
 }
+function revealResult() {
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+$('search-result').scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest'});
+}
 async function searchWhenReady() {
 if (!(await listsReady) && !(await loadLists())) {
 showLoadError();
+revealResult();
 return;
 }
 search();
+revealResult();
 }
 searchButton.addEventListener('click', () => searchWhenReady());
 $('cgi-text').addEventListener('input', () => {
@@ -996,8 +1002,12 @@ $('search-result').hidden = true;
 updateWhatsApp();
 $('bookmark-message').textContent = 'Rezultatul CGI a fost preluat.';
 $('bookmark-message').hidden = false;
-if (extractModel(text)) searchWhenReady();
+if (extractModel(text)) {
+$('cgi-text').focus({preventScroll: true});
+searchWhenReady();
+} else {
 $('cgi-text').focus();
+}
 }
 window.addEventListener('kmw-cgi-result', event => receiveCgi(event.detail.text));
 if (window.fwcCgiResult) receiveCgi(window.fwcCgiResult);
