@@ -132,8 +132,6 @@ window.dispatchEvent(new CustomEvent('kmw-device-opened', {detail: {tab: output,
 if (!navigateResultTab(output, commandUrl(data.protocol, data, COMMANDS[operation]))) {
 closeResultTab(output);
 showMessage('Fila de rezultat a fost închisă sau blocată. Apasă din nou butonul dorit.');
-} else {
-showMessage('Dacă pagina se deschide prin HTTPS și apare avertizarea de certificat, după ce accepți continuarea conexiunii poate fi necesar să introduci din nou utilizatorul și parola.');
 }
 }
 readButton.addEventListener('click', () => openDevice());
